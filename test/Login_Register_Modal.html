@@ -8,17 +8,15 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
     <script src="../js/bootstrap.js"></script>
     <script src="../js/jquery.js"></script>
-
+    <link rel="stylesheet" href="../css/font.css">
     <link rel="stylesheet" href="../css/Login_Register_Modal.css">
 </head>
 
 <body>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
-        Đăng nhập / Đăng ký
-    </button>
+
 
     <!-- Bắt đầu Modal -->
-    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal fade show" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="false">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 1440px; width: 100%; height: 700px;">
             <div class="modal-content" style="border-radius: 60px; overflow: hidden; border: none;">
                 <div class="modal-body p-0">
@@ -118,8 +116,33 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            var myModal = new bootstrap.Modal($('#authModal')[0]);
+            myModal.show();
 
-    <script src="../js/Login_Register_Modal.js"></script>
+            const $container = $('.auth-container');
+            const $showRegisterBtn = $('#show-register');
+            const $showLoginBtn = $('#show-login');
+
+            $showRegisterBtn.on('click', () => {
+                $container.addClass('active');
+            });
+
+            $showLoginBtn.on('click', () => {
+                $container.removeClass('active');
+            });
+
+            $('#authModal').on('click', function (event) {
+                if (event.target === this) {
+                    const modalInstance = bootstrap.Modal.getInstance(this);
+                    modalInstance.hide();
+                }
+            });
+        });
+
+    </script>
+
 </body>
 
 </html>

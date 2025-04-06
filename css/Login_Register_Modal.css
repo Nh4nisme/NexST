@@ -1,8 +1,31 @@
-* {
-    font-family: 'Montserrat';
-    src: url('../fonts/montserrat/Montserrat-VariableFont_wght.ttf') format('truetype');
-    font-weight: 100 900;
-    font-style: normal;
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Áp dụng animation khi modal hiển thị */
+.modal.show .modal-dialog {
+    animation: slideDown 0.5s ease-out forwards;
+}
+
+/* Đảm bảo modal bắt đầu từ ngoài màn hình khi chưa hiển thị */
+.modal.fade .modal-dialog {
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* Khi modal đóng, thêm hiệu ứng ngược lại (tùy chọn) */
+.modal.fade:not(.show) .modal-dialog {
+    transform: translateY(-100%);
+    opacity: 0;
 }
 
 .blobs-container {
