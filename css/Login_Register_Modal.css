@@ -46,7 +46,7 @@
     width: 500px;
     height: 525px;
     left: 129px;
-    background: url("../svg/blobs-vector-1.svg");
+    background: url("../images/svg/blobs-vector-1.svg");
     z-index: 2;
 }
 
@@ -55,12 +55,12 @@
     height: 406px;
     top: 354px;
     left: 35px;
-    background: url("../svg/blobs-vector-2.svg");
+    background: url("../images/svg/blobs-vector-2.svg");
     z-index: 3;
 }
 
 .blobs-vector-3 {
-    background: url("../svg/blobs-vector-3.svg");
+    background: url("../images/svg/blobs-vector-3.svg");
     width: 474px;
     height: 573px;
     top: 55px;
@@ -69,7 +69,7 @@
 }
 
 .main-img-blobs {
-    background: url("../svg/MainImage.svg");
+    background: url("../images/svg/MainImage.svg");
     width: 371px;
     height: 513px;
     top: 114px;

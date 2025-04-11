@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Dashboard</title>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <script src="../lib/bootstrap.js"></script>
+    <script src="../lib/jquery.js"></script>
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/Profile.css">
+    <script src="../script/main.js"></script>
+</head>
+
+<body>
+    <div id="header-pr"></div>
+    <section>
+        <div class="container-center">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h3>My Account</h3>
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="active">Dashboard</li>
+                    <li>Orders</li>
+                    <li>Addresses</li>
+                    <li>Account Details</li>
+                    <li>Change Password</li>
+                    <li>Wishlist</li>
+                    <li>Logout</li>
+                </ul>
+            </div>
+            <div class="dashboard-container">
+                <!-- Phần Giới Thiệu -->
+                <div class="mb-4">
+                    <h3>Hello, Nhan</h3>
+                    <p>
+                        From your account dashboard you can easily check & view your
+                        <a href="#" class="text-primary">Recent Order</a>. Manage your
+                        <a href="#" class="text-primary">Shipping and Billing Addresses</a> and
+                        edit your <a href="#" class="text-primary">Password and Account Details</a>
+                    </p>
+                </div>
+
+                <!-- Thông tin Section -->
+                <div class="row mb-4">
+                    <!-- Account Info Box -->
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <div class="info-box">
+                            <div class="info-heading">ACCOUNT INFO</div>
+                            <div class="user-details">
+                                <div class="user-avatar">
+                                    <img src="../icons/nav/user.svg" alt="User">
+                                </div>
+                                <div>
+                                    <div>Nguyen Hoang Son</div>
+                                    <div class="text-muted">Govap - TP.HCM</div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Email:</strong> nguyensonn2k5@gmail.com
+                            </div>
+                            <div class="mb-2">
+                                <strong>Phone:</strong> +84 910JQKA
+                            </div>
+                            <div class="mb-3">
+                                <strong>Address:</strong> Govap, TP.HCM, VietNam
+                            </div>
+                            <button class="edit-btn" id="editaccount-btn">EDIT ACCOUNT</button>
+                        </div>
+                    </div>
+
+                    <!-- Billing Address -->
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <div class="info-box">
+                            <div class="info-heading">BILLING ADDRESS</div>
+                            <div class="mb-2">Hoang Son</div>
+                            <div class="mb-2">12 Nguyen Van Bao Street, Ward 1, Go Vap</div>
+                            <div class="mb-2">District, Ho Chi Minh City</div>
+                            <div class="mb-2"><strong>Phone Number:</strong> +84 910JQKA</div>
+                            <div class="mb-3"><strong>Email:</strong> nguyensonn2k5@gmail.com</div>
+                            <button class="edit-btn" id="editaddress-btn">EDIT ADDRESS</button>
+                        </div>
+                    </div>
+
+                    <!-- Thống kê đơn hàng -->
+                    <div class="col-lg-4 col-md-12 mb-3">
+                        <div class="row h-100">
+                            <!-- Tổng đơn hàng -->
+                            <div class="col-lg-12 col-md-4 mb-3">
+                                <div class="info-box d-flex align-items-center">
+                                    <div class="stats-icon">
+                                        <img src="../icons/nav/shopping-cart.svg" alt="Orders">
+                                    </div>
+                                    <div>
+                                        <div class="h4 mb-0">154</div>
+                                        <div>Total Orders</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Đơn hàng đang xử lý -->
+                            <div class="col-lg-12 col-md-4 mb-3">
+                                <div class="info-box d-flex align-items-center">
+                                    <div class="stats-icon">
+                                        <img src="../icons/nav/shopping-cart.svg" alt="Pending">
+                                    </div>
+                                    <div>
+                                        <div class="h4 mb-0">05</div>
+                                        <div>Pending Orders</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Đơn hàng hoàn thành -->
+                            <div class="col-lg-12 col-md-4">
+                                <div class="info-box d-flex align-items-center">
+                                    <div class="stats-icon">
+                                        <img src="../icons/nav/shopping-cart.svg" alt="Completed">
+                                    </div>
+                                    <div>
+                                        <div class="h4 mb-0">149</div>
+                                        <div>Completed Orders</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Đơn hàng gần đây -->
+                <div class="mb-5">
+                    <div class="section-header">
+                        <h4>RECENT ORDERS</h4>
+                        <a href="#" class="view-link">
+                            View All
+                            <span class="arrow-icon">→</span>
+                        </a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#23668881</td>
+                                    <td><span class="status-progress">In Progress</span></td>
+                                    <td>DEC 30,2024 05:18</td>
+                                    <td>$999 (5 products)</td>
+                                    <td>
+                                        <a href="#" class="view-link">
+                                            View details
+                                            <span class="arrow-icon">→</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#23668431</td>
+                                    <td><span class="status-canceled">Canceled</span></td>
+                                    <td>DEC 30,2024 05:18</td>
+                                    <td>$999 (5 products)</td>
+                                    <td>
+                                        <a href="#" class="view-link">
+                                            View details
+                                            <span class="arrow-icon">→</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#23668881</td>
+                                    <td><span class="status-completed">Completed</span></td>
+                                    <td>DEC 30,2024 05:18</td>
+                                    <td>$1,500 (5 products)</td>
+                                    <td>
+                                        <a href="#" class="view-link">
+                                            View details
+                                            <span class="arrow-icon">→</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#23668881</td>
+                                    <td><span class="status-canceled">Canceled</span></td>
+                                    <td>DEC 30,2024 05:18</td>
+                                    <td>$90 (5 products)</td>
+                                    <td>
+                                        <a href="#" class="view-link">
+                                            View details
+                                            <span class="arrow-icon">→</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#23668881</td>
+                                    <td><span class="status-completed">Completed</span></td>
+                                    <td>DEC 30,2024 05:18</td>
+                                    <td>$999 (5 products)</td>
+                                    <td>
+                                        <a href="#" class="view-link">
+                                            View details
+                                            <span class="arrow-icon">→</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#23668881</td>
+                                    <td><span class="status-completed">Completed</span></td>
+                                    <td>DEC 30,2024 05:18</td>
+                                    <td>$2,100 (5 products)</td>
+                                    <td>
+                                        <a href="#" class="view-link">
+                                            View details
+                                            <span class="arrow-icon">→</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#23668881</td>
+                                    <td><span class="status-progress">In Progress</span></td>
+                                    <td>DEC 30,2024 05:18</td>
+                                    <td>$999 (5 products)</td>
+                                    <td>
+                                        <a href="#" class="view-link">
+                                            View details
+                                            <span class="arrow-icon">→</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Sản phẩm đã xem gần đây -->
+                <div>
+                    <div class="section-header">
+                        <h4>Browsing History</h4>
+                        <a href="#" class="view-link">
+                            View All
+                            <span class="arrow-icon">→</span>
+                        </a>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="../images/products/Alienware Aurora R15.svg" alt="Belkin Type C Cable">
+                                </div>
+                                <div class="product-title">
+                                    Mô tả sản phẩm
+                                </div>
+                                <div>
+                                    <span class="price">999$</span>
+                                    <span class="old-price">1200$</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="../images/products/Alienware Aurora R15.svg" alt="SanDisk Memory Card">
+                                </div>
+                                <div class="product-title">
+                                    Mô tả sản phẩm
+                                </div>
+                                <div>
+                                    <span class="price">999$</span>
+                                    <span class="old-price">1200$</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="../images/products/Alienware Aurora R15.svg" alt="Stargo Battery">
+                                </div>
+                                <div class="product-title">
+                                    Mô tả
+                                </div>
+                                <div>
+                                    <span class="price">999$</span>
+                                    <span class="old-price">1200$</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="../images/products/Alienware Aurora R15.svg" alt="Targus Dock">
+                                </div>
+                                <div class="product-title">
+                                    Mô tả
+                                </div>
+                                <div>
+                                    <span class="price">999$</span>
+                                    <span class="old-price">1200$</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chọn trang -->
+                    <div class="pagination">
+                        <a href="#">&laquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="modalContainer"></div>
+    <div id="footer-pr"></div>
+    <script>
+        $(document).ready(function () {
+            loadHTML('header-pr', 'header1.html');
+            loadHTML('footer-pr', 'footer.html');
+            setTimeout(function () {
+                $.getScript("../script/Modal_Login_Register.js", function () {
+                    // Xử lý sự kiện đóng modal để reset nó
+                    $(document).on('hidden.bs.modal', '#modalContainer', function () {
+                        // Reset form trong modal nếu có
+                        if ($(this).find('form').length) {
+                            $(this).find('form')[0].reset();
+                        }
+                        // Xóa các class có thể gây xung đột khi mở lại
+                        $(this).removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open').css('padding-right', '');
+                    });
+
+                    // Sự kiện click cho các nút đăng nhập
+                    $(document).on('click', '#loginButton', function (e) {
+                        e.preventDefault();
+                        $('#authModal').modal('hidden');
+                        console.log("Đã nhấp nút đăng nhập");
+                    });
+                    $("<style>")
+                        .prop("type", "text/css")
+                        .html(`
+                            .btn-auth {
+                                border-radius: 8px !important;
+                                padding: 10px !important;
+                                background-color: #B30100 !important;  /* Sử dụng màu giống file CSS gốc */
+                                color: white !important;
+                                border: none !important;
+                                transition: background-color 0.3s !important;
+                            }
+                            .btn-auth:hover {
+                                background-color: #870100 !important;
+                            }
+                        `)
+                        .appendTo("head");
+                });
+            }, 500);
+            // Xử lý sự kiện click nút EDIT ACCOUNT
+            $('#editaccount-btn').on('click', function () {
+                // Tải nội dung modal từ file Modal_Edit_Profile.html
+                $('#modalContainer').load('Modal_Edit_Profile.html', function () {
+                    // Sau khi tải xong, hiển thị modal
+                    const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+                    profileModal.show();
+                    // Ẩn nút "Open Profile Modal" mặc định
+                    $('[data-bs-target="#profileModal"]').hide();
+                });
+            });
+            // Hàm điền dữ liệu hiện tại vào form
+            function fillCurrentProfileData() {
+                // Lấy dữ liệu từ trang profile
+                const fullName = $('.user-details div:first').text().trim();
+                const nameParts = fullName.split(' ');
+                const firstName = nameParts[0] || '';
+                const lastName = nameParts.slice(1).join(' ') || '';
+                const email = $('.user-details').next().text().replace('Email:', '').trim();
+                const phone = $('.user-details').next().next().text().replace('Phone:', '').trim();
+
+                // Điền vào form modal
+                $('#firstName').val(firstName);
+                $('#lastName').val(lastName);
+                $('#email').val(email);
+                $('#phoneAccount').val(phone);
+
+                // Cập nhật profile card trong modal
+                updateProfileCard();
+            }
+
+            // Hàm cập nhật profile card trong modal (tương tự như trong Modal_Edit_Profile.html)
+            function updateProfileCard() {
+                const firstName = $('#firstName').val();
+                const lastName = $('#lastName').val();
+                const email = $('#email').val();
+
+                if (firstName || lastName) {
+                    $('#profileName').text((firstName + ' ' + lastName).trim());
+                }
+
+                if (email) {
+                    $('#profileEmail').text(email);
+                }
+            }
+            // Xử lý sự kiện click nút EDIT address
+            $('#editaddress-btn').on('click', function () {
+                // Tải nội dung modal từ file Modal_Edit_Profile.html
+                $('#modalContainer').load('Address_Info.html', function () {
+                    // Sau khi tải xong, hiển thị modal
+                    const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+                    profileModal.show();
+                    // Ẩn nút "Open Profile Modal" mặc định
+                    $('[data-bs-target="#profileModal"]').hide();
+                });
+            });
+            // Hàm điền dữ liệu hiện tại vào form
+            function fillCurrentProfileData() {
+                // Lấy dữ liệu từ trang profile
+                const fullName = $('.user-details div:first').text().trim();
+                const nameParts = fullName.split(' ');
+                const firstName = nameParts[0] || '';
+                const lastName = nameParts.slice(1).join(' ') || '';
+                const email = $('.user-details').next().text().replace('Email:', '').trim();
+                const phone = $('.user-details').next().next().text().replace('Phone:', '').trim();
+
+                // Điền vào form modal
+                $('#firstName').val(firstName);
+                $('#lastName').val(lastName);
+                $('#email').val(email);
+                $('#phoneAddress').val(phone);
+
+                // Cập nhật profile card trong modal
+                updateProfileCard();
+            }
+
+            // Hàm cập nhật profile card trong modal (tương tự như trong Address_Info.html)
+            function updateProfileCard() {
+                const nickname = $('#nickname').val();
+                const email = $('#email').val();
+
+                // Cập nhật tên
+                if (nickname) {
+                    $('#profileName').text((nickname).trim());
+                }
+
+                // Cập nhật email
+                if (email) {
+                    $('#profileEmail').text(email);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
