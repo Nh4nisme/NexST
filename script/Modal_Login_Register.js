@@ -9,7 +9,18 @@ $(document).ready(function () {
 
     // Regex patterns cho validation
     const patterns = {
-        // ...existing code...
+        name: /^[a-zA-ZÀ-ỹ\s]{2,50}$/,
+        email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        phoneVN: /^(0|\+84)([0-9]{9,10})$/
+    };
+
+    // Thông báo lỗi tương ứng
+    const errorMessages = {
+        name: 'Tên phải từ 2-50 ký tự và không chứa ký tự đặc biệt',
+        email: 'Email không hợp lệ. Vui lòng nhập đúng định dạng',
+        password: 'Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt',
+        phoneVN: 'Số điện thoại không hợp lệ, định dạng 0xxxxxxxxx hoặc +84xxxxxxxxx'
     };
 
     // Hủy event trước để tránh đăng ký nhiều lần
@@ -174,6 +185,9 @@ $(document).ready(function () {
             localStorage.setItem('current_user', JSON.stringify(userInfo));
             console.log('Đăng nhập thành công:', userInfo);
 
+            // Cập nhật nút đăng nhập với tên người dùng
+            updateLoginButton(user.name);
+
             alert('Đăng nhập thành công! Bạn sẽ được chuyển về trang chủ.');
 
             // Đóng modal
@@ -181,12 +195,21 @@ $(document).ready(function () {
             if (modalInstance) modalInstance.hide();
 
             // Chuyển hướng về trang chủ
-            window.location.href = 'homepage.html';
+            window.location.href = 'header1.html';
         } else {
             alert('Email/số điện thoại hoặc mật khẩu không đúng!');
         }
     }
-
+    // Hàm câp nhật nút đăng nhập với tên người dùng
+    function updateLoginButton(userName) {
+        const $loginButton = $('#loginButton');
+        if ($loginButton.length) {
+            $loginButton.html(`
+                <img src="../icons/nav/user.svg" alt="" class="me-1">
+                <span class="d-none d-sm-inline">${userName}</span>
+            `);
+        }
+    }
     // Thêm thông báo lỗi cho các trường
     function addValidationFeedback() {
         $('input').each(function () {

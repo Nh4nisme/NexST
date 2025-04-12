@@ -51,10 +51,96 @@ function filterByCheckbox(productList) {
     return finalProducts;
 }
 
+function setupLoginModal() {
+    const currentUser = JSON.parse(localStorage.getItem('current_user'));
+    if (currentUser && currentUser.name) {
+        // Người dùng đã đăng nhập, cập nhật nút đăng nhập
+        checkUserLoginStatus();
+    } else {
+        // Đảm bảo Modal_Login_Register.js được tải
+        $.getScript("../script/Modal_Login_Register.js", function () {
+            // Xử lý sự kiện đóng modal để reset nó
+            $(document).on('hidden.bs.modal', '#modalContainer', function () {
+                // Reset form trong modal nếu có
+                if ($(this).find('form').length) {
+                    $(this).find('form')[0].reset();
+                }
+                // Xóa các class có thể gây xung đột khi mở lại
+                $(this).removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open').css('padding-right', '');
+            });
+
+            // Sự kiện click cho các nút đăng nhập
+            $(document).on('click', '.toggle-form', function () {
+                // Định nghĩa $container mỗi lần sự kiện được kích hoạt
+                const $container = $('.auth-container');
+
+                if ($(this).attr('id') === 'show-register') {
+                    $container.addClass('active');
+                    console.log("Chuyển sang form đăng ký");
+                } else if ($(this).attr('id') === 'show-login') {
+                    $container.removeClass('active');
+                    console.log("Chuyển sang form đăng nhập");
+                }
+            });
+            // Thêm style cho nút đăng nhập
+            $("<style>")
+                .prop("type", "text/css")
+                .html(`
+                .btn-auth {
+                    border-radius: 8px !important;
+                    padding: 10px !important;
+                    background-color: #B30100 !important;  /* Sử dụng màu giống file CSS gốc */
+                    color: white !important;
+                    border: none !important;
+                    transition: background-color 0.3s !important;
+                }
+                .btn-auth:hover {
+                    background-color: #870100 !important;
+                }
+            `)
+                .appendTo("head");
+        });
+    }
+}
+
+// Hàm kiểm tra trạng thái đăng nhập của người dùng và cập nhật nút Login
+function checkUserLoginStatus() {
+    try {
+        const currentUser = JSON.parse(localStorage.getItem('current_user'));
+        if (currentUser && currentUser.name) {
+            // Cập nhật nút đăng nhập bằng tên người dùng
+            const $loginButton = $('#loginButton');
+            if ($loginButton.length) {
+                $loginButton.html(`
+                    <img src="../icons/nav/user.svg" alt="" class="me-1">
+                    <span class="d-none d-sm-inline">${currentUser.name}</span>
+                `);
+
+                // Thay đổi hành vi nút khi đã đăng nhập
+                $loginButton.off('click').on('click', function (e) {
+                    e.preventDefault();
+                    // Hiển thị dropdown hoặc modal với tùy chọn đăng xuất
+                    if (confirm('Bạn muốn đăng xuất?')) {
+                        localStorage.removeItem('current_user');
+                        location.reload();
+                    }
+                });
+            }
+        }
+    } catch (error) {
+        console.error("Lỗi khi kiểm tra trạng thái đăng nhập:", error);
+    }
+}
+
 // --- Khi document ready ---
 $(document).ready(async function () {
     // 1. Load HTML thành phần
-    await loadHTML("header1-placeholder", "../html/header1.html");
+    await loadHTML("header1-placeholder", "../html/header1.html", function () {
+        // Kiểm tra trạng thái đăng nhập sau khi header được tải
+        checkUserLoginStatus();
+    });
     await loadHTML("header2-placeholder", "../html/header2.html", function () {
         const $searchBox = $("#header2-placeholder #searchBox");
 
@@ -76,6 +162,8 @@ $(document).ready(async function () {
     await loadHTML("footer-placeholder", "../html/footer.html");
     await loadHTML("filter-content", "../html/filter.html");
 
+    // Cài đặt modal đăng nhập sau khi header đã được load
+    setupLoginModal();
     // 2. Load sản phẩm ban đầu
     await fetchProducts();
 
