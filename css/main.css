@@ -31,6 +31,12 @@ html {
 /* OVERRIDE .master-container-red FOR A DIFFERENT PAGE BACKGROUND */
 /* OVERRIDE .master-container-red FOR A DIFFERENT PAGE BACKGROUND */
 /* OVERRIDE .master-container-red FOR A DIFFERENT PAGE BACKGROUND */
+.nav-link.active {
+    color: #BF0100 !important;
+    font-weight: bold;
+    border-bottom: 2px solid #BF0100;
+}
+
 .master-container-red {
     background: linear-gradient(to bottom, #BF0100, #590000);
     width: 100%;
@@ -211,7 +217,7 @@ html {
     transform: scale(1.2);
 }
 
-.nav-link {
+.navbar-nav {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
@@ -219,7 +225,7 @@ html {
     padding: 0;
 }
 
-.nav-link li {
+.navbar-nav li {
     padding: 0;
 }
 
@@ -227,17 +233,17 @@ html {
     flex-wrap: nowrap;
 }
 
-.nav-link li a {
+.navbar-nav li a {
     color: rgb(200, 200, 200);
     font-weight: 600;
     text-decoration: none;
 }
 
-.nav-link li a:hover {
+.navbar-nav li a:hover {
     color: #BF0100;
 }
 
-.nav-link li a:active {
+.navbar-nav li a:active {
     color: grey;
 }
 

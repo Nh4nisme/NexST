@@ -51,6 +51,20 @@ function filterByCheckbox(productList) {
     return finalProducts;
 }
 
+function highlightCurrentLink() {
+    const navLinks = $("#header1-placeholder .navbar-nav a");
+    const currentPath = window.location.pathname.split('/').pop();
+
+    navLinks.each(function () {
+        const linkPath = $(this).attr('href')?.split('/').pop();
+
+        if (linkPath && linkPath !== '#' && linkPath === currentPath) {
+            $(this).addClass('active');
+        }
+    });
+}
+
+// Hàm load Login Modal
 function setupLoginModal() {
     const currentUser = JSON.parse(localStorage.getItem('current_user'));
     if (currentUser && currentUser.name) {
@@ -58,7 +72,7 @@ function setupLoginModal() {
         checkUserLoginStatus();
     } else {
         // Đảm bảo Modal_Login_Register.js được tải
-        $.getScript("../script/Modal_Login_Register.js", function () {
+        $.getScript("../scripts/Modal_Login_Register.js", function () {
             // Xử lý sự kiện đóng modal để reset nó
             $(document).on('hidden.bs.modal', '#modalContainer', function () {
                 // Reset form trong modal nếu có
