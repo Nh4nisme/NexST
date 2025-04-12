@@ -22,6 +22,14 @@ $(document).ready(function () {
             .appendTo("head");
     }
 
+    // Thêm xử lý sự kiện đăng xuất khi nhấn vào nút Logout trong sidebar
+    $('#logout').on('click', function () {
+        if (confirm('Bạn muốn đăng xuất?')) {
+            localStorage.removeItem('current_user');
+            window.location.href = '../html/homepage.html'; // Chuyển về trang chủ sau khi đăng xuất
+        }
+    });
+
     // Xử lý sự kiện click nút EDIT ACCOUNT
     $('#editaccount-btn').on('click', function () {
         // Tải nội dung modal từ file Modal_Edit_Profile.html
