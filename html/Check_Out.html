@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Out</title>
     <link rel="stylesheet" href="../lib/bootstrap.css">
-    <script src="../lib/bootstrap.js"></script>
+    <script src="../lib/bootstrap.bundle.js"></script>
     <script src="../lib/jquery.js"></script>
     <link rel="stylesheet" href="../css/font.css">
     <link rel="stylesheet" href="../css/main.css">
@@ -19,17 +19,19 @@
         <div class="main-checkout my-4 mx-auto">
             <div class="container py-4">
                 <!-- Header Section -->
-                <div class="d-flex mb-4" style="gap: 20px;">
-                    <div class="flex-grow-2" style="flex-basis: 66.6666%; max-width: 66.6666%">
+                <div class="row mb-4 g-4">
+                    <div class="col-lg-7">
                         <div class="header-box">
-                            <strong>Returning customer?</strong> <button style="border-style: none;"><a href="#"
-                                    id="showLoginModal">Click here to
-                                    login</a></button>
+                            <strong>Returning customer?</strong>
+                            <button style="border-style: none;">
+                                <a href="#" id="showLoginModal" class="text-danger">Click here to login</a>
+                            </button>
                         </div>
                     </div>
-                    <div class="flex-grow-1" style="flex-basis: 33.3333%; max-width: 33.3333%">
+                    <div class="col-lg-5">
                         <div class="header-box">
-                            <strong>Have a coupon?</strong> <a href="#">Click here to enter your code</a>
+                            <strong>Have a coupon?</strong>
+                            <a href="#" class="text-danger">Click here to enter your code</a>
                         </div>
                     </div>
                 </div>
@@ -37,7 +39,7 @@
                 <!-- Main Content Section -->
                 <div class="row">
                     <!-- Left: Billing Form -->
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <div class="form-section">
                             <h5>Billing Detail</h5>
                             <div class="row">
@@ -95,7 +97,7 @@
                     </div>
 
                     <!-- Right: Order Summary -->
-                    <div class="col-md-4 d-flex flex-column" style="min-height: 100%;">
+                    <div class="col-md-5 d-flex flex-column" style="min-height: 100%;">
                         <div class="flex-grow-1"></div>
                         <div class=" order-summary mt-auto">
                             <h5>Your Order</h5>

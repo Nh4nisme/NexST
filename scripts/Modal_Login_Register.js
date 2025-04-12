@@ -195,7 +195,7 @@ $(document).ready(function () {
             if (modalInstance) modalInstance.hide();
 
             // Chuyển hướng về trang chủ
-            window.location.href = 'header1.html';
+            window.location.href = 'homepage.html';
         } else {
             alert('Email/số điện thoại hoặc mật khẩu không đúng!');
         }
