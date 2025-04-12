@@ -136,10 +136,7 @@ function checkUserLoginStatus() {
                 $loginButton.off('click').on('click', function (e) {
                     e.preventDefault();
                     // Hiển thị dropdown hoặc modal với tùy chọn đăng xuất
-                    if (confirm('Bạn muốn đăng xuất?')) {
-                        localStorage.removeItem('current_user');
-                        location.reload();
-                    }
+                    window.location.href = '../html/Profile.html';
                 });
             }
         }
