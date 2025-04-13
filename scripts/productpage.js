@@ -20,15 +20,18 @@ async function fetchProducts() {
 
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get("category");
+        const search = urlParams.get("search");
 
-        if (category) {
+        if (search) {
+            $("#searchBox").val(search);     // hiện lại từ khóa nếu muốn
+            loadProducts(search);            // Gọi hàm lọc theo keyword
+        } else if (category) {
             const filters = {};
             for (const [key, value] of urlParams.entries()) {
                 if (key !== "category") {
                     filters[key] = value;
                 }
             }
-
             loadByCategoryAndFilter(category, filters);
         }
     } catch (error) {
@@ -119,6 +122,7 @@ function renderProducts(products, $container) {
 
     if (products.length > 0) {
         products.forEach(product => {
+            console.log(product);
             const $productItem = $("<div>").addClass("col-12 col-sm-6 col-md-4 col-lg-3 g-3").html(`
                 <div class="card p-0 h-100 d-flex flex-column" data-id="${product.id}">
                     <div class="card-body m-0">

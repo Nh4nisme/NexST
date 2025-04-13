@@ -8,7 +8,7 @@ $(document).ready(function () {
         address: /^[a-zA-Z0-9À-ỹ\s,.'-]{5,150}$/  // Địa chỉ từ 5-150 ký tự
     };
 
-    // Function to validate field
+    // Hàm kiểm tra
     function validateField(field, regex) {
         const value = field.val().trim();
         if (regex.test(value)) {
@@ -50,9 +50,9 @@ $(document).ready(function () {
         // Thêm id và required attribute vào các field
         $('input.form-control').eq(0).attr({ id: 'firstName', required: true });
         $('input.form-control').eq(1).attr({ id: 'lastName', required: true });
-        $('input.form-control').eq(6).attr({ id: 'phone', required: true });
-        $('input.form-control').eq(7).attr({ id: 'email', required: true, type: 'email' });
-        $('input.form-control').eq(5).attr({ id: 'zipCode', required: true });
+        $('input.form-control').eq(7).attr({ id: 'phone', required: true });
+        $('input.form-control').eq(8).attr({ id: 'email', required: true, type: 'email' });
+        $('input.form-control').eq(6).attr({ id: 'zipCode', required: true });
         $('input.form-control').eq(3).attr({ id: 'address', required: true });
 
         // Thêm feedback elements
@@ -147,12 +147,196 @@ $(document).ready(function () {
         });
     }
 
-    // Khởi tạo tất cả chức năng
-    function init() {
-        initializeForm();
-        handleFormSubmit();
+    // Hàm để lấy dữ liệu giỏ hàng và hiển thị lên trang thanh toán
+    function loadCartDataToCheckout() {
+        // Lấy dữ liệu giỏ hàng từ localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Giỏ hàng trống thì trả về trang giỏ hàng
+        if (cart.length === 0) {
+            alert('Your cart is empty. Please add some products before checkout.');
+            window.location.href = '../html/cart.html';
+            return;
+        }
+
+        // Hàm để tải dữ liệu sản phẩm từ file JSON và hiển thị lên trang thanh toán
+        $.getJSON('../json/products.json', function (products) {
+            const orderList = $('.reverse-order-list');
+            orderList.empty(); // Clear existing items
+
+            let subTotal = 0;
+
+            // Thêm từng sản phẩm vào danh sách đơn hàng
+            cart.forEach(item => {
+                const product = products.find(p => p.id === item.id);
+
+                if (product) {
+                    // Tính giá sản phẩm
+                    let productPrice = parseFloat(product.price.replace('$', '').trim());
+                    let itemTotal = productPrice * item.quantity;
+                    subTotal += itemTotal;
+
+                    // Tạo HTML cho sản phẩm
+                    const productHTML = `
+                        <div class="product-item d-flex align-items-center">
+                            <img src="${product.img}" alt="${product.title}">
+                            <div>
+                                <div>${product.title}</div>
+                                <small>x${item.quantity}</small>
+                            </div>
+                            <div class="ms-auto text-danger">$${itemTotal.toFixed(2)}</div>
+                        </div>
+                    `;
+
+                    orderList.append(productHTML);
+                }
+            });
+
+            // Tính toán tổng tiền
+            const shipping = 600;
+            const tax = subTotal * 0.05;
+            const total = subTotal + shipping + tax;
+
+            // Cập nhật các thông số trong hóa đơn
+            $('h5.text-end.text-danger').text(`Order Total: $${total.toFixed(2)}`);
+
+            window.orderTotal = total;
+        }).fail(function () {
+            console.error('Failed to load products data');
+        });
     }
 
-    // Chạy khởi tạo
+    // Hàm để khởi tạo thông tin đơn hàng
+    function initOrderSummary() {
+        // Thêm các phần tử vào trang thanh toán
+        const orderSummarySection = $('.order-summary');
+
+        // Thêm các phần tử vào phần tóm tắt đơn hàng
+        $('h5.text-end.text-danger').before(`
+            <div class="d-flex justify-content-between mt-3 mb-2">
+                <span>Sub Total:</span>
+                <span id="checkout-subtotal">$0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span>Shipping Estimate:</span>
+                <span id="checkout-shipping">$600.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span>Tax Estimate:</span>
+                <span id="checkout-tax">$0.00</span>
+            </div>
+            <hr>
+        `);
+        loadCartDataToCheckout();
+    }
+
+    // Hàm để xử lý nút "Place Order"
+    function setupPlaceOrderButton() {
+        $('#place-order').on('click', function (e) {
+            e.preventDefault();
+
+            // Kiểm tra nếu form chưa tồn tại
+            if ($('.form-section').parent('form').length === 0) {
+                $('.form-section').wrap('<form id="billing-form"></form>');
+            }
+
+            // Lấy tất cả các trường bắt buộc
+            const requiredFields = [
+                { elem: $('#firstName'), pattern: patterns.name }, // firstName
+                { elem: $('#lastName'), pattern: patterns.name }, // lastName
+                { elem: $('#phone'), pattern: patterns.phone }, // phone
+                { elem: $('#email'), pattern: patterns.email }, // email
+                { elem: $('#zipCode'), pattern: patterns.zipcode }, // zipCode
+                { elem: $('#address'), pattern: patterns.address } // address
+            ];
+
+            let isValid = true;
+
+            // Kiểm tra tất cả các trường bắt buộc
+            requiredFields.forEach(field => {
+                // Kiểm tra nếu trường rỗng
+                if (!field.elem.val() || !field.elem.val().trim()) {
+                    field.elem.removeClass('is-valid').addClass('is-invalid');
+                    isValid = false;
+                    return;
+                }
+
+                // Kiểm tra nếu trường khớp với pattern
+                if (!validateField(field.elem, field.pattern)) {
+                    isValid = false;
+                }
+            });
+
+            // Hiển thị thông báo phù hợp dựa trên kết quả kiểm tra
+            if (!isValid) {
+                alert("Sai thông tin");
+
+                // Xóa thông báo lỗi cũ và thêm thông báo mới
+                $('#validationErrorAlert').remove();
+                $('.form-section').prepend(
+                    '<div id="validationErrorAlert" class="alert alert-danger" role="alert">' +
+                    'Vui lòng điền đầy đủ và chính xác thông tin trước khi đặt hàng.' +
+                    '</div>'
+                );
+
+                // Cuộn lên đầu form
+                $('html, body').animate({
+                    scrollTop: $('.form-section').offset().top - 100
+                }, 200);
+            } else {
+                // Tất cả đầu vào hợp lệ - đặt hàng thành công
+                alert("Đặt hàng thành công");
+
+                // Lấy giỏ hàng hiện tại
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // Tạo thông tin đơn hàng mới
+                const newOrder = {
+                    id: 'ORD' + Date.now(),
+                    date: new Date().toLocaleString(),
+                    status: 'In Progress',
+                    items: cart,
+                    total: window.orderTotal || 0
+                };
+
+                // Lấy danh sách đơn hàng hiện tại và thêm đơn hàng mới
+                const orders = JSON.parse(localStorage.getItem('orders')) || [];
+                orders.push(newOrder);
+                localStorage.setItem('orders', JSON.stringify(orders));
+
+                // Cập nhật thống kê đơn hàng
+                updateOrderStats();
+
+                // Xóa giỏ hàng
+                localStorage.setItem('cart', JSON.stringify([]));
+
+                // Chuyển hướng đến trang chủ
+                setTimeout(function () {
+                    window.location.href = '../html/Profile.html';
+                }, 1000);
+            }
+        });
+    }
+
+    // Hàm cập nhật số lượng đơn hàng trong profile
+    function updateOrderStats() {
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+        // Đếm số đơn hàng theo trạng thái
+        const totalOrders = orders.length;
+        // Lưu thống kê vào localStorage để Profile.js có thể đọc
+        const orderStats = {
+            total: totalOrders,
+            lastUpdated: Date.now()
+        };
+
+        localStorage.setItem('orderStats', JSON.stringify(orderStats));
+    }
+    // Hàm khởi tạo
+    function init() {
+        initializeForm();
+        initOrderSummary();
+        handleFormSubmit();
+        setupPlaceOrderButton();
+    }
     init();
 });

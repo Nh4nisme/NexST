@@ -4,11 +4,11 @@ $(document).ready(function () {
     const patterns = {
         name: /^[a-zA-ZÀ-ỹ\s]{2,50}$/,  // Tên có từ 2-50 ký tự, bao gồm chữ cái và khoảng trắng, hỗ trợ tiếng Việt
         email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,  // Email format
-        phone: /^(0|\+84)([0-9]{9,10})$/,  // Số điện thoại Việt Nam (0xxxxxxxxx hoặc +84xxxxxxxxx)
-        address: /^[a-zA-Z0-9À-ỹ\s,.'-]{5,150}$/  // Địa chỉ 5-150 ký tự
+        phone: /^(0|\+84)([0-9]{9,10})$/,  // Số điện thoại(0xxxxxxxxx hoặc +84xxxxxxxxx)
+        address: /^[a-zA-Z0-9À-ỹ\s,.'-]{5,50}$/  // Địa chỉ 5-50 ký tự
     };
 
-    // Function to validate field
+    // Hàm kiểm tra
     function validateField(field, regex) {
         const value = field.val().trim();
         if (!value) {
@@ -30,10 +30,10 @@ $(document).ready(function () {
         nickname: 'Tên phải có từ 2-50 ký tự và chỉ chứa chữ cái',
         email: 'Vui lòng nhập đúng định dạng email',
         phoneaddress: 'Số điện thoại phải bắt đầu bằng 0 hoặc +84 và có 9-10 số',
-        address: 'Địa chỉ phải có từ 5-150 ký tự'
+        address: 'Địa chỉ phải có từ 5-50 ký tự'
     };
 
-    // Add validation feedback elements
+    // Thêm các phần tử feedback cho các trường
     function addFeedbackElements() {
         $('#nickname, #email, #phoneaddress, #address').each(function () {
             const id = $(this).attr('id');
@@ -59,7 +59,7 @@ $(document).ready(function () {
 
         $('#phoneaddress').on('input', function () {
             if (!$(this).val().trim()) {
-                // Phone is optional, so remove validation classes if empty
+                // Nếu trường trống, xóa class is-valid và is-invalid
                 $(this).removeClass('is-valid is-invalid');
             } else {
                 validateField($(this), patterns.phone);
@@ -262,7 +262,7 @@ $(document).ready(function () {
                 $('.profile-img').attr('src', currentUser.avatar);
             }
 
-            // Trigger input event để kích hoạt validation và cập nhật profile card
+            // Gọi hàm cập nhật profile card để hiển thị thông tin hiện tại
             $('#nickname, #email, #phoneaddress, #address').trigger('input');
         } catch (error) {
             console.error('Lỗi khi tải dữ liệu người dùng:', error);

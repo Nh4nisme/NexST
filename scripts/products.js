@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(async function () {
     const data = {
         laptop: `
                         <div class="row flex-wrap p-3" data-content="laptop"> 
@@ -362,48 +362,64 @@ $(document).ready(function () {
         e.preventDefault();
         const category = $(this).closest(".menu-item").data("content");
         if (category) {
-            window.location.href = `productpage.html?category=${category}`;
+            window.location.href = `/html/productpage.html?category=${category}`;
         }
     });
-});
-// js chung
-document.addEventListener('DOMContentLoaded', function () {
 
-    // add header va footer
-    fetch('../html/header2.html')
+    // Load header
+    await fetch('../html/header2.html')
         .then(response => response.text())
         .then(data => {
-            document.getElementById('header-placeholder').innerHTML = data;
+            $("#header-placeholder").html(data);
         })
-        .catch(error => console.error('Lỗi khi đọc JSON:', error));
+        .catch(error => console.error('Lỗi khi đọc header:', error));
 
-    fetch('../html/footer.html')
+    // Sau khi header đã load, gán sự kiện search
+    $("#searchBox").on("keypress", function (e) {
+        if (e.which === 13) {
+            const keyword = $(this).val().trim();
+            if (keyword !== "") {
+                window.location.href = `/html/productpage.html?search=${encodeURIComponent(keyword)}`;
+            }
+        }
+    });
+
+    // Load footer
+    await fetch('../html/footer.html')
         .then(response => response.text())
         .then(data => {
-            document.getElementById('footer-placeholder').innerHTML = data;
+            $("#footer-placeholder").html(data);
         })
-        .catch(error => console.error('Lỗi khi đọc JSON:', error));
+        .catch(error => console.error('Lỗi khi đọc footer:', error));
 
+    await readJson('pc', 'bot-category-offer');
+    await readJson('monitor', 'bot-category-offer-monitors');
+    await readJson('pc', 'feature-products');
 
-    readJson('pc', 'bot-category-offer');
-    readJson('monitor', 'bot-category-offer-monitors');
-    readJson('pc', 'feature-products');
-
-    let firstTab = document.querySelector('.tab-btn');
-    if (firstTab) {
-        firstTab.click();
+    // Gọi openTab cho tab đầu tiên (tab GAMING)
+    const firstTabButton = $(".tab-btn").first();
+    if (firstTabButton.length) {
+        openTab({ currentTarget: firstTabButton[0] }, 'GAMING');
     }
 });
 
-function openTab(event, tabId) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+function openTab(evt, tabId) {
+    if (!tabId) {
+        console.warn("Tab ID không hợp lệ:", tabId);
+        return;
+    }
 
-    document.getElementById(tabId).classList.add('active');
-    event.currentTarget.classList.add('active');
+    $(".tab-content").removeClass("active");
+    $(".tab-btn").removeClass("active");
+    $("#" + tabId).addClass("active");
+
+    if (evt?.currentTarget) {
+        evt.currentTarget.classList.add("active");
+    }
 
     fetchDataToTab(tabId);
 }
+
 
 function fetchDataToTab(tabId) {
     console.log("Loading data for tab:", tabId);
@@ -432,105 +448,6 @@ function fetchDataToTab(tabId) {
     }).fail(error => console.error('Lỗi đọc file:', error));
 }
 
-
-function readJson(category, containerId, categoryDetail = null) {
-    fetch('../json/products.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Lỗi HTTP (${response.status})`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (!Array.isArray(data)) {
-                console.error('Dữ liệu JSON phải là một mảng!');
-                return;
-            }
-
-            const container = document.getElementById(containerId);
-            if (!container) {
-                console.error(`Không tìm thấy phần tử #${containerId}`);
-                return;
-            }
-
-            // Lọc theo category (và categoryDetail nếu có)
-            let items = data.filter(product =>
-                product.category === category &&
-                (categoryDetail ? product.categoryDetail?.toUpperCase() === categoryDetail.toUpperCase() : true)
-            );
-
-            container.innerHTML = items.slice(0, 5).map(createHTML).join('');
-            AddToCartButtons(items.slice(0, 5));
-        })
-        .catch(error => console.error('Lỗi khi đọc JSON:', error));
-}
-
-function AddToCartButtons(products) {
-    const buttons = document.querySelectorAll('.add-to-cart-btn');
-    buttons.forEach((button) => {
-        button.addEventListener('click', () => {
-            const productId = button.getAttribute('data-id');
-            const product = products.find(p => p.id == productId);
-
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            // Kiểm tra xem sản phẩm đã có trong giỏ chưa
-            const index = cart.findIndex(item => item.id === product.id);
-            if (index === -1) {
-                cart.push({ ...product, quantity: 1 });
-            } else {
-                cart[index].quantity += 1; // Tăng số lượng nếu đã có
-            }
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-            alert("Added to cart!");
-        });
-    });
-}
-
-function createHTML(product) {
-    return `
-                                <div class="product col">
-                                    <div class="card products-tab-content-card shadow h-100 border-0 rounded-4">
-                                        <img src="${product.img}" class="card-img-top p-2" alt="${product.description}">
-                                        <div class="card-body d-flex flex-column justify-content-between" style="font-size: 14px;">
-                                            <div class="mb-5">
-                                                <h6 class="card-title fw-bold mb-0">${product.title}</h6>
-                                                <p class="card-text mb-0">${product.description}</p>
-                                                <div class="">
-                                                    <span class="fw-semibold">${product.price}</span>
-                                                    <del class="text-secondary fw-normal">${product.oldPrice}</del>
-                                                </div>
-                                                <div class="products-card-details d-flex flex-column rounded-4 p-2" style="font-size: 11px;">
-                                                    <div class="cpu d-flex gap-2">
-                                                        <img src="../icons/products-card-details/badge.svg" alt="cpu">
-                                                        <span>${product.cpu}</span>
-                                                    </div>
-                                                    <div class="gpu d-flex gap-2">
-                                                        <img src="../icons/products-card-details/gpu.svg" alt="gpu">
-                                                        <span>${product.gpu}</span>
-                                                    </div>
-                                                    <div class="ram-ssd d-flex gap-2">
-                                                        <img src="../icons/products-card-details/ram.svg" alt="ram">
-                                                        <span>${product.ram}</span>
-                                                        <img src="../icons/products-card-details/ssd.svg" alt="ssd">
-                                                        <span>${product.ssd}</span>
-                                                    </div>
-                                                    <div class="screensize d-flex gap-2">
-                                                        <img src="../icons/products-card-details/screensize.svg" alt="screensize">
-                                                        <span>${product.screen}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button class="btn rounded-3 d-flex align-items-center end-0 add-to-cart-btn" data-id="${product.id}">
-                                                <span class="mx-auto">Add To Basket</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-    `;
-}
-
 // Xử lý click submenu item (brand, usage, feature,...)
 $(document).on("click", ".submenu-container a", function (e) {
     e.preventDefault();
@@ -545,7 +462,7 @@ $(document).on("click", ".submenu-container a", function (e) {
     const filterKey = detectFilterKey($link);
 
     if (category && filterKey && value) {
-        const url = `productpage.html?category=${category}&${filterKey}=${encodeURIComponent(value)}`;
+        const url = `/html/productpage.html?category=${category}&${filterKey}=${encodeURIComponent(value)}`;
         window.location.href = url;
     }
 });
@@ -573,4 +490,123 @@ function detectFilterKey($link) {
     if (title.includes("providers")) return "provider";
     return "filter";
 }
+
+async function readJson(category, containerId, categoryDetail = null) {
+    try {
+        const response = await fetch('../json/products.json');
+        if (!response.ok) {
+            throw new Error(`Lỗi HTTP (${response.status})`);
+        }
+
+        const data = await response.json();
+
+        if (!Array.isArray(data)) {
+            console.error('Dữ liệu JSON phải là một mảng!');
+            return;
+        }
+
+        const container = document.getElementById(containerId);
+        if (!container) {
+            console.error(`Không tìm thấy phần tử #${containerId}`);
+            return;
+        }
+
+        let items = data.filter(product =>
+            product.category === category &&
+            (categoryDetail ? product.categoryDetail?.toUpperCase() === categoryDetail.toUpperCase() : true)
+        );
+
+        const slicedItems = items.slice(0, 5);
+        container.innerHTML = slicedItems.map(createHTML).join('');
+        AddToCartButtons(slicedItems);
+    } catch (error) {
+        console.error('Lỗi khi đọc JSON:', error);
+    }
+}
+
+function AddToCartButtons(products) {
+    $('.add-to-cart-btn').each(function() {
+        $(this).on('click', function() {
+            const productId = $(this).data('id');  // Lấy ID sản phẩm
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];  // Lấy giỏ hàng từ localStorage
+
+            // Kiểm tra sản phẩm có trong danh sách sản phẩm không
+            const product = products.find(p => p.id === productId);
+            if (!product) {
+                alert("Sản phẩm không tồn tại!");
+                return;
+            }
+
+            // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+            const index = cart.findIndex(item => item.id === productId);
+            if (index === -1) {
+                // Nếu chưa có, thêm sản phẩm vào giỏ với số lượng là 1
+                cart.push({ id: productId, quantity: 1 });
+            } else {
+                // Nếu đã có, tăng số lượng lên 1
+                cart[index].quantity += 1;
+            }
+
+            // Lưu giỏ hàng vào localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Thông báo sản phẩm đã được thêm vào giỏ hàng (có thể thay alert bằng thông báo đẹp hơn)
+            alert(`${product.title} đã được thêm vào giỏ hàng!`);
+
+            // Cập nhật lại giao diện giỏ hàng
+            getCart();
+        });
+    });
+}
+
+function createHTML(product) {
+    return `
+        <div class="product col">
+            <div class="card products-tab-content-card shadow h-100 border-0 rounded-4">
+                <img src="${product.img}" class="card-img-top p-2" alt="${product.description}">
+                <div class="card-body d-flex flex-column justify-content-between" style="font-size: 14px; min-height: 300px; padding: 10px 15px;">
+                    <div class="d-flex flex-column justify-content-between" style="flex-grow: 1; margin-bottom: 100px;">
+                        <div>
+                            <h6 class="card-title fw-bold mb-0">${product.title}</h6>
+                            <p class="card-text mb-0">${product.description}</p>
+                            <span class="fw-semibold" style="color: #BF0100">${product.price}</span>
+                            <del class="text-secondary fw-normal">${product.oldPrice}</del>
+                        </div>
+                        <div class="products-card-details d-flex flex-column rounded-4 p-2" style="font-size: 11px;">
+                            ${product.cpu ? `<div class="cpu d-flex gap-2">
+                                <img src="../icons/products-card-details/badge.svg" alt="cpu">
+                                <span>${product.cpu}</span>
+                            </div>` : ''}
+                            ${product.gpu ? `<div class="gpu d-flex gap-2">
+                                <img src="../icons/products-card-details/gpu.svg" alt="gpu">
+                                <span>${product.gpu}</span>
+                            </div>` : ''}
+                            <div class="d-flex">
+                            ${product.ram ? `<div class="ram-ssd d-flex gap-2">
+                                <img src="../icons/products-card-details/ram.svg" alt="ram">
+                                <span>${product.ram}</span>
+                            </div>` : ''}
+                            ${product.ssd ? `<div class="ram-ssd d-flex gap-2">
+                                <img src="../icons/products-card-details/ssd.svg" alt="ssd">
+                                <span>${product.ssd}</span>
+                            </div>` : ''}
+                            </div>
+                            ${product.screen || product.size ? `<div class="screensize d-flex gap-2">
+                                <img src="../icons/products-card-details/screensize.svg" alt="screensize">
+                                <span>${product.screen || product.size}</span>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                    <button class="btn btn-shopping d-flex align-items-center w-100 position-relative add-to-cart-btn" data-id="${product.id}">
+                        <span class="mx-auto" style="font-size: 12px; padding: 3px">Add To Basket</span>
+                        <img src="../icons/transactional/shopping-cart.svg" alt="" class="position-absolute end-0">
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+
+
 

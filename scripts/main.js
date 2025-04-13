@@ -175,8 +175,6 @@ $(document).ready(async function () {
 
     // Cài đặt modal đăng nhập sau khi header đã được load
     setupLoginModal();
-    // 2. Load sản phẩm ban đầu
-    await fetchProducts();
 
     // 3. Bắt sự kiện filter checkbox
     $(document).on("change", ".modified-checbox", function () {
@@ -185,6 +183,7 @@ $(document).ready(async function () {
     });
 
     rebindAddToCartEvent();
+
 });
 
 // --- Hàm gán sự kiện Add To Cart ---

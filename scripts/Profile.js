@@ -1,6 +1,8 @@
 $(document).ready(function () {
     // Load thông tin người dùng từ localStorage khi trang được tải
     loadUserInformation();
+    // Load số liệu thống kê đơn hàng
+    loadOrderStats();
     // Load sản phẩm recomment
     loadBrowsingHistory();
     // Hàm thêm style cho nút Save
@@ -370,7 +372,7 @@ $(document).ready(function () {
             // Cập nhật giao diện
             loadUserInformation();
 
-            // Thông báo thành công (chỉ một lần)
+            // Thông báo thành công
             setTimeout(() => {
                 alert('Thông tin đã được cập nhật!');
                 updateInProgress = false;
@@ -470,6 +472,20 @@ $(document).ready(function () {
 
         // Gọi hàm thêm sự kiện cho nút Add To Basket
         AddToCartButtons(products);
+    }
+    // Hàm tải và hiển thị thống kê đơn hàng
+    function loadOrderStats() {
+        try {
+            // Lấy thống kê đơn hàng từ localStorage
+            const orderStats = JSON.parse(localStorage.getItem('orderStats')) || { total: 0 };
+
+            // Cập nhật giao diện
+            $('.num-order').eq(0).text(orderStats.total);  // Tổng đơn hàng
+            $('.num-order').eq(1).text(orderStats.total); // Đơn hàng đang xử lý
+            $('.num-order').eq(2).text(orderStats.total); // Đơn hàng hoàn thành
+        } catch (error) {
+            console.error("Lỗi khi tải thống kê đơn hàng:", error);
+        }
     }
     // Hàm thêm sự kiện cho nút "Add To Basket"
     function AddToCartButtons(products) {
