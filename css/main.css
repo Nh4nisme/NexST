@@ -12,18 +12,22 @@
     font-weight: 100 900;
     font-style: italic;
 }
+
 /* END OF FONTS */
 /* DEFAULT TEMPLATE  */
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: "Montserrat", sans-serif;
 }
-body, html {
+
+body,
+html {
     overflow-x: hidden;
     width: 100%;
     max-width: 100%;
 }
+
 /* OVERRIDE .master-container-red FOR A DIFFERENT PAGE BACKGROUND */
 /* OVERRIDE .master-container-red FOR A DIFFERENT PAGE BACKGROUND */
 /* OVERRIDE .master-container-red FOR A DIFFERENT PAGE BACKGROUND */
@@ -40,6 +44,7 @@ body, html {
     min-height: 100vh;
     overflow-x: hidden;
 }
+
 /* END OF DEAFAULT TEMPLATE */
 /* HEADER */
 .pre-nav {
@@ -53,6 +58,7 @@ body, html {
     align-items: center;
     width: 100%;
 }
+
 /* START OF NAV SOCIAL (Facebook + Instagram + Twitter buttons) */
 .nav-social {
     display: flex;
@@ -89,6 +95,7 @@ body, html {
     width: 20px;
     height: 20px;
 }
+
 /* END OF NAV SOCIAL (Facebook + Instagram + Twitter buttons) */
 /* START OF SCROLLING TEXT */
 .scrolling-container {
@@ -112,9 +119,15 @@ body, html {
 }
 
 @keyframes scrollText {
-    from { transform: translateX(200%); }
-    to { transform: translateX(-200%); }
+    from {
+        transform: translateX(200%);
+    }
+
+    to {
+        transform: translateX(-200%);
+    }
 }
+
 /* END OF SCROLLING TEXT */
 /* START OF ADDRESS + CONTACT ITEM(PHONE + EMAIL) */
 .address {
@@ -152,13 +165,14 @@ body, html {
 .contact-item:hover a {
     color: rgb(190, 190, 190);
 }
+
 /* END OF ADDRESS + CONTACT ITEM(PHONE + EMAIL) */
 /* START OF NAVBAR */
 .navbar {
     background-color: #2E2E2E;
     display: flex;
     justify-content: space-between;
-}   
+}
 
 .navbar-collapse {
     flex-grow: 0;
@@ -170,6 +184,7 @@ body, html {
 .nav-subcontainer {
     margin-left: 5%;
 }
+
 /* END OF NAVBAR */
 /* START OF LOGO */
 .logo {
@@ -183,6 +198,7 @@ body, html {
 .logo:hover {
     cursor: pointer;
 }
+
 /* END OF LOGO */
 /* START OF NAV LINKS (Hone, Products, Contact Us...) STYLING */
 .navbar-toggler-icon {
@@ -230,6 +246,7 @@ body, html {
 .navbar-nav li a:active {
     color: grey;
 }
+
 /* END OF NAV LINKS (Hone, Products, Contact Us...) STYLING */
 /* START OF SEARCHBOX STYLING */
 
@@ -239,70 +256,70 @@ body, html {
 }
 
 .search-toggle {
-display: none;
-margin: 10px;
-margin-top: 15px;
-margin-bottom: 15px;
-padding: 10px;
-background-color: white;
-color: black;
-border: none;
-border-radius: 3px;
-cursor: pointer;
-transition: 0.3s ease;
+    display: none;
+    margin: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
 .search-toggle:hover {
-background-color: rgb(216, 216, 216);
-transform: scale(1.2);
+    background-color: rgb(216, 216, 216);
+    transform: scale(1.2);
 }
 
 .search-toggle img {
-width: 20px;
-height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 .search-container {
-flex-grow: 1;
-max-width: 600px;
-margin: 0 20px;
+    flex-grow: 1;
+    max-width: 600px;
+    margin: 0 20px;
 }
 
 .search-box {
-display: flex;
-align-items: center;
-background: white;
-border-radius: 25px;
-padding: 5px 15px;
-position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 25px;
+    padding: 5px 15px;
+    position: relative;
 }
 
 .search-icon {
-width: 20px;
-height: 20px;
-margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
 .search-input {
-width: 100%;
-padding: 8px 0;
-border: none;
-outline: none;
-font-size: 14px;
-background: transparent;
+    width: 100%;
+    padding: 8px 0;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
 }
 
 .search-input::placeholder {
-color: transparent;
+    color: transparent;
 }
 
 .placeholder-text {
-position: absolute;
-left: 45px;
-pointer-events: none;
-color: #6c757d;
-font-size: 14px;
-transition: opacity 0.2s;
+    position: absolute;
+    left: 45px;
+    pointer-events: none;
+    color: #6c757d;
+    font-size: 14px;
+    transition: opacity 0.2s;
 }
 
 /* END OF SEARCHBOX STYLING */
@@ -347,6 +364,7 @@ transition: opacity 0.2s;
 footer {
     border-top: 10px solid rgb(191, 0, 0);
 }
+
 .info-container {
     background: rgb(216, 216, 216);
     padding-top: 1%;
@@ -373,7 +391,7 @@ footer {
     height: 40px;
 }
 
-.feature div h3{
+.feature div h3 {
     padding-bottom: 0.5%;
 }
 
@@ -387,7 +405,7 @@ footer {
     margin-bottom: 6%;
 }
 
-.footer-column p{
+.footer-column p {
     margin-bottom: 2%;
 }
 
@@ -435,9 +453,10 @@ footer {
 }
 
 .footer-copyright {
-    background-color: rgb(191,0,0);
+    background-color: rgb(191, 0, 0);
     color: white;
 }
+
 /* END OF FOOTER */
 /* MOBILE COMPATIBILITY */
 @media (max-width: 1000px) {
@@ -450,24 +469,24 @@ footer {
     .pre-nav {
         flex-direction: column;
     }
-        
+
     .scrolling-container {
         width: 100%;
     }
-    
+
     .scrolling-text {
         font-size: 14px;
     }
-    
+
     .address {
         justify-content: right;
         width: 100%;
     }
-    
+
     .contact-item {
         font-size: 12px;
     }
-    
+
     .contact-item img {
         width: 15px;
         height: 15px;
@@ -482,12 +501,12 @@ footer {
         z-index: 1000;
         padding: 10px;
     }
-    
+
     .navbar-collapse ul {
         flex-direction: column;
         width: 100%;
     }
-    
+
     .nav-button button {
         margin: 5px;
         padding: 8px;
@@ -496,67 +515,76 @@ footer {
     .navbar-nav:first-child {
         margin-top: 5%;
     }
+
     .navbar-nav:last-child {
         margin-bottom: 5%;
     }
+
     .nav-subcontainer {
         margin: 0%;
     }
+
     .navbar-toggler {
         margin-left: 3%;
         transform: scale(0.6);
     }
+
     .navbar-toggler:hover {
         transform: scale(0.8);
     }
+
     .logo {
         padding-left: 0px;
         font-size: 20px;
     }
+
     .search-toggle {
         display: flex;
         align-items: center;
         justify-content: center;
-      }
-      
+    }
+
     .search-container {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    margin: 0;
-    max-width: 100%;
-    background: #212529;
-    padding: 10px 15px;
-    z-index: 1000;
-    
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease, padding 0.3s ease;
-    padding-top: 0;
-    padding-bottom: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin: 0;
+        max-width: 100%;
+        background: #212529;
+        padding: 10px 15px;
+        z-index: 1000;
+
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease, padding 0.3s ease;
+        padding-top: 0;
+        padding-bottom: 0;
     }
-    
+
     .search-container.active {
-    max-height: 60px;
-    opacity: 1;
-    transform: translateY(0);
-    padding: 10px 15px;
+        max-height: 60px;
+        opacity: 1;
+        transform: translateY(0);
+        padding: 10px 15px;
     }
+
     .nav-button button {
         align-items: right;
         justify-content: right;
-    
+
         margin: 5px;
         padding: 5px;
     }
+
     .nav-button button:first-child {
         gap: 3px;
         padding: 3px;
         padding-right: 5px;
     }
+
     .feature {
         margin-bottom: 5%;
         justify-content: center;
@@ -584,7 +612,7 @@ footer {
     .contact-item a {
         font-size: 12px;
     }
-    
+
     .address {
         display: flex;
         margin-left: 10%;
@@ -598,13 +626,15 @@ footer {
     .navbar-toggler:hover {
         transform: scale(0.7);
     }
+
     .nav-button button {
         align-items: right;
         justify-content: right;
-    
+
         margin: 2px;
         padding: 3px;
     }
+
     .nav-button button:first-child {
         padding: 3px;
         padding-right: 0px;
@@ -617,6 +647,7 @@ footer {
         font-size: 12px;
         font-weight: 600;
     }
+
     .nav-social a {
         margin: 2px 2px;
         padding-right: 5px;
@@ -634,16 +665,19 @@ footer {
         margin-left: 0%;
         transform: scale(0.4);
     }
+
     .navbar-toggler:hover {
         transform: scale(0.6);
     }
+
     .nav-button button {
         align-items: right;
         justify-content: right;
-    
+
         margin: 1px;
         padding: 1px;
     }
+
     .nav-button button:first-child {
         padding: 1px;
     }

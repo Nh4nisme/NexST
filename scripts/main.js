@@ -149,6 +149,7 @@ function checkUserLoginStatus() {
 $(document).ready(async function () {
     // 1. Load HTML thành phần
     await loadHTML("header1-placeholder", "../html/header1.html", function () {
+        highlightCurrentLink();
         // Kiểm tra trạng thái đăng nhập sau khi header được tải
         checkUserLoginStatus();
     });
