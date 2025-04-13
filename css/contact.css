@@ -10,8 +10,12 @@
 }
 
 .optional {
-    color: gray;
+    color: rgb(70, 70, 70);
     font-weight: 300;
+}
+
+.optional.dark-mode {
+    color: rgb(220, 220, 220);
 }
 
 .default-link {
@@ -23,16 +27,17 @@
 }
 
 .default-red-button {
-    padding: 15px;
-    background: rgb(191,0,0);
-    color: white;
+    padding: 15px !important;
+    background: rgb(191,0,0) !important;
+    color: white !important;
     border: none;
     border-radius: 10px;
 }
 
 .default-red-button:hover {
-    background: rgb(90,0,0);
-    cursor: pointer;
+    background: rgb(136, 0, 0) !important;
+    color: white !important;
+    cursor: pointer !important;
 }
 
 .sidepanel {
@@ -42,7 +47,7 @@
 }
 
 .sidepanel.dark-mode {
-    background-color: rgb(50, 50, 50);
+    background-color: rgb(75, 75, 75);
     color: white;
 }
 

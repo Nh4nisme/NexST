@@ -21,18 +21,26 @@ async function loadProductDetail() {
             $("#product-detail-container").html("<p class='text-center'>Không tìm thấy sản phẩm.</p>");
             return;
         }
+        $("#description").text(product.description);
+        $("#brand").text(product.title);
+        $("#cpu").text(product.cpu);
+        $("#gpu").text(product.gpu);
+        $("#screen").text(product.screen);
+        $("#ram").text(product.ram);
+        $("#storage").text(product.ssd);
+        $(".product-img").attr("src", product.img);
 
         // Render sản phẩm ra trang
         $("#product-detail-container").html(`
-            <div class="card h-100 p-3 d-flex flex-row w-75">
+            <div class="card h-100 p-3 d-flex flex-row">
                 <div class="img me-3">
-                    <img src="${product.img}" class="img-fluid mb-2" alt="${product.description}">
+                    <img src="${product.img}" class="img-fluid mb-2 w-100" alt="${product.description}">
                     <div class="d-flex">
                         
                     </div>
                 </div>
                 <div class="info">
-                        <h5 class="fw-bold">${product.description}</h5>
+                        <h5 class="fw-bold w-100">${product.description}</h5>
                         <p>Brand: ${product.title}</p>
                         <p>Laptop color: Black</p>
                         
@@ -47,18 +55,60 @@ async function loadProductDetail() {
                             <span class="text-muted text-decoration-line-through">${product.oldPrice}</span>
                         </div>
                         <div class="d-flex">
-                            <button class="btn btn-danger me-2">BUY NOW</button>
-                            <button class="btn btn-outline-danger">ADD TO CART</button>
+                            <button class="btn buy-now-btn btn-danger me-2">BUY NOW</button>
+                            <button class="btn btn-outline-danger add-to-cart-btn" data-id="${product.id}">ADD TO CART</button>
                         </div>
                 </div>
             </div>
             
         `);
+
+        // Thêm sự kiện cho nút "BUY NOW"
+        setupBuyNowButton();
+
     } catch (error) {
         console.error("Lỗi load sản phẩm:", error);
     }
 }
+// Thêm hàm xử lý nút "BUY NOW"
+function setupBuyNowButton() {
+    $('.buy-now-btn').on('click', function () {
+        // Lấy ID sản phẩm hiện tại từ localStorage
+        const productId = localStorage.getItem("productDetail");
+
+        if (!productId) {
+            alert("Không tìm thấy thông tin sản phẩm!");
+            return;
+        }
+
+        // Tìm sản phẩm trong dữ liệu sản phẩm đã fetch
+        const product = productData.find(p => p.id === productId);
+        if (!product) {
+            alert("Không tìm thấy sản phẩm!");
+            return;
+        }
+
+        // Tạo giỏ hàng tạm thời chỉ với sản phẩm này
+        const tempCart = [{
+            id: productId,
+            quantity: 1
+        }];
+
+        // Lưu vào localStorage với key đặc biệt để phân biệt với giỏ hàng thông thường
+        localStorage.setItem('buyNowCart', JSON.stringify(tempCart));
+
+        // Thêm flag để Check_Out.js biết là "Buy Now"
+        localStorage.setItem('isBuyNow', 'true');
+
+        // Chuyển hướng đến trang thanh toán
+        window.location.href = '../html/Check_Out.html';
+    });
+}
 
 $(document).ready(function () {
     loadProductDetail();
+
+    // Xóa thông tin giỏ hàng tạm khi trang chi tiết sản phẩm được load
+    localStorage.removeItem('buyNowCart');
+    localStorage.removeItem('isBuyNow');
 });

@@ -448,17 +448,23 @@ function fetchDataToTab(tabId) {
     }).fail(error => console.error('Lỗi đọc file:', error));
 }
 
-// Xử lý click submenu item (brand, usage, feature,...)
-$(document).on("click", ".submenu-container a", function (e) {
+// Xử lý click cho cả submenu (desktop) và horizontal-menu (mobile)
+$(document).on("click", ".submenu-container a, .horizontal-menu a", function (e) {
     e.preventDefault();
 
     const $link = $(this);
     const value = $link.text().trim();
 
-    // Lấy category hiện tại từ data-content của menu-item đang hover
-    const category = $(".menu-item:hover").data("content") || getCurrentCategory();
+    if ($link.closest(".horizontal-menu").length > 0) {
+        const category = $link.data("category");
+        if (category) {
+            const url = `/html/productpage.html?category=${category}`;
+            window.location.href = url;
+        }
+        return;
+    }
 
-    // Lấy từ khóa filter theo tiêu đề
+    const category = $(".menu-item:hover").data("content") || getCurrentCategory();
     const filterKey = detectFilterKey($link);
 
     if (category && filterKey && value) {
@@ -466,6 +472,8 @@ $(document).on("click", ".submenu-container a", function (e) {
         window.location.href = url;
     }
 });
+
+
 
 // Lấy lại category trong trường hợp không hover đúng
 function getCurrentCategory() {
@@ -550,10 +558,7 @@ function AddToCartButtons(products) {
             // Lưu giỏ hàng vào localStorage
             localStorage.setItem('cart', JSON.stringify(cart));
 
-            // Thông báo sản phẩm đã được thêm vào giỏ hàng (có thể thay alert bằng thông báo đẹp hơn)
             alert(`${product.title} đã được thêm vào giỏ hàng!`);
-
-            // Cập nhật lại giao diện giỏ hàng
             getCart();
         });
     });
@@ -562,7 +567,7 @@ function AddToCartButtons(products) {
 function createHTML(product) {
     return `
         <div class="product col">
-            <div class="card products-tab-content-card shadow h-100 border-0 rounded-4">
+            <div class="card products-tab-content-card shadow h-100 border-0 rounded-4 product-card" data-id="${product.id}">
                 <img src="${product.img}" class="card-img-top p-2" alt="${product.description}">
                 <div class="card-body d-flex flex-column justify-content-between" style="font-size: 14px; min-height: 300px; padding: 10px 15px;">
                     <div class="d-flex flex-column justify-content-between" style="flex-grow: 1; margin-bottom: 100px;">
@@ -607,6 +612,11 @@ function createHTML(product) {
     `;
 }
 
+// xử lý phần product details
+$(document).on('click', '.product-card', function (e) {
+    if ($(e.target).closest('.add-to-cart-btn').length > 0) return;
 
-
-
+    const productId = $(this).data('id');
+    localStorage.setItem('productDetail', productId);
+    window.location.href = '/html/product-detail.html';
+});

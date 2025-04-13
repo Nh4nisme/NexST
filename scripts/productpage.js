@@ -89,7 +89,7 @@ function loadProductList() {
     $productFind.empty();
     if (!$productList.length) return;
 
-    const productsToShow = productData.slice(0, 8);
+    const productsToShow = productData.slice(0, 10);
     renderProducts(productsToShow, $productList);
 }
 
@@ -106,7 +106,8 @@ function loadSlides() {
             .html(`
                 <div class="content text-left position-absolute">
                     <div class="name fw-bold">${product.description}</div>
-                    <div class="des fw-bold text-danger">${product.price}</div>
+                    <span class="des text-price fw-bold pe-2">${product.price}</span>
+                    <span class="des text-muted text-decoration-line-through">${product.oldPrice}</span>
                 </div>`);
         $slideArea.append($itemDiv);
     });
@@ -118,7 +119,7 @@ function renderProducts(products, $container) {
     if (!$container || !$container.length) return;
 
     $container.empty();
-    const $row = $("<div>").addClass("row");
+    const $row = $("<div>").addClass("row five-cols");
 
     if (products.length > 0) {
         products.forEach(product => {
@@ -253,8 +254,7 @@ function loadByCategoryAndFilter(category, filters = {}) {
         );
     }
 
-    renderProducts(filtered, $productFind);
-    showFilterByKeyword("laptop"); 
+    renderProducts(filtered, $productFind); 
 }
 
 

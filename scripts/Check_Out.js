@@ -50,9 +50,9 @@ $(document).ready(function () {
         // Thêm id và required attribute vào các field
         $('input.form-control').eq(0).attr({ id: 'firstName', required: true });
         $('input.form-control').eq(1).attr({ id: 'lastName', required: true });
-        $('input.form-control').eq(7).attr({ id: 'phone', required: true });
-        $('input.form-control').eq(8).attr({ id: 'email', required: true, type: 'email' });
-        $('input.form-control').eq(6).attr({ id: 'zipCode', required: true });
+        $('input.form-control').eq(6).attr({ id: 'phone', required: true });
+        $('input.form-control').eq(7).attr({ id: 'email', required: true, type: 'email' });
+        $('input.form-control').eq(5).attr({ id: 'zipCode', required: true });
         $('input.form-control').eq(3).attr({ id: 'address', required: true });
 
         // Thêm feedback elements
@@ -149,12 +149,20 @@ $(document).ready(function () {
 
     // Hàm để lấy dữ liệu giỏ hàng và hiển thị lên trang thanh toán
     function loadCartDataToCheckout() {
-        // Lấy dữ liệu giỏ hàng từ localStorage
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // Kiểm tra xem có phải là chế độ Buy Now không
+        const isBuyNow = localStorage.getItem('isBuyNow') === 'true';
+
+        // Lấy giỏ hàng phù hợp (Buy Now hoặc giỏ hàng thông thường)
+        let cart;
+        if (isBuyNow) {
+            cart = JSON.parse(localStorage.getItem('buyNowCart')) || [];
+        } else {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+        }
 
         // Giỏ hàng trống thì trả về trang giỏ hàng
         if (cart.length === 0) {
-            alert('Your cart is empty. Please add some products before checkout.');
+            alert('Giỏ hàng trống!');
             window.location.href = '../html/cart.html';
             return;
         }
@@ -178,15 +186,15 @@ $(document).ready(function () {
 
                     // Tạo HTML cho sản phẩm
                     const productHTML = `
-                        <div class="product-item d-flex align-items-center">
-                            <img src="${product.img}" alt="${product.title}">
-                            <div>
-                                <div>${product.title}</div>
-                                <small>x${item.quantity}</small>
-                            </div>
-                            <div class="ms-auto text-danger">$${itemTotal.toFixed(2)}</div>
+                    <div class="product-item d-flex align-items-center">
+                        <img src="${product.img}" alt="${product.title}">
+                        <div>
+                            <div>${product.title}</div>
+                            <small>x${item.quantity}</small>
                         </div>
-                    `;
+                        <div class="ms-auto text-danger">$${itemTotal.toFixed(2)}</div>
+                    </div>
+                `;
 
                     orderList.append(productHTML);
                 }
@@ -198,6 +206,8 @@ $(document).ready(function () {
             const total = subTotal + shipping + tax;
 
             // Cập nhật các thông số trong hóa đơn
+            $('#checkout-subtotal').text(`$${subTotal.toFixed(2)}`);
+            $('#checkout-tax').text(`$${tax.toFixed(2)}`);
             $('h5.text-end.text-danger').text(`Order Total: $${total.toFixed(2)}`);
 
             window.orderTotal = total;
@@ -287,8 +297,16 @@ $(document).ready(function () {
                 // Tất cả đầu vào hợp lệ - đặt hàng thành công
                 alert("Đặt hàng thành công");
 
-                // Lấy giỏ hàng hiện tại
-                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                // Kiểm tra xem có phải từ Buy Now không
+                const isBuyNow = localStorage.getItem('isBuyNow') === 'true';
+
+                // Lấy giỏ hàng phù hợp
+                let cart;
+                if (isBuyNow) {
+                    cart = JSON.parse(localStorage.getItem('buyNowCart')) || [];
+                } else {
+                    cart = JSON.parse(localStorage.getItem('cart')) || [];
+                }
 
                 // Tạo thông tin đơn hàng mới
                 const newOrder = {
@@ -307,8 +325,10 @@ $(document).ready(function () {
                 // Cập nhật thống kê đơn hàng
                 updateOrderStats();
 
-                // Xóa giỏ hàng
+                // Xóa giỏ hàng và thông tin Buy Now
                 localStorage.setItem('cart', JSON.stringify([]));
+                localStorage.removeItem('buyNowCart');
+                localStorage.removeItem('isBuyNow');
 
                 // Chuyển hướng đến trang chủ
                 setTimeout(function () {

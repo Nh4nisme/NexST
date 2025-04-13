@@ -4,6 +4,7 @@
 
 .quancao {
     overflow: hidden;
+    background-image: linear-gradient(to right, #b31515 0%, #ff0000 50%, #BF0100 100%);
 }
 
 .quancao .container {
@@ -57,13 +58,21 @@
 
 .quancao .item .content {
     top: 30%;
-    right: 10%;
-    width: 300px;
-    padding: 0;
-    color: #eee;
+    right: 1% !important;
+    width: 50%;
     transform: translate(0, -50%);
     display: none;
     font-family: system-ui;
+    color: #BF0100;
+    font-size: 12px !important;
+}
+
+.quancao .item .content span {
+    font-size: 30px !important;
+}
+
+.quancao .item .content .text-price {
+    color: #BF0100;
 }
 
 .quancao .item:nth-child(2) .content {
@@ -111,6 +120,7 @@
         transform: translate(0, 100px);
         filter: blur(33px);
     }
+
     to {
         opacity: 1;
         transform: translate(0, 0);
@@ -118,3 +128,9 @@
     }
 }
 
+@media (min-width: 992px) { /* Desktop trở lên */
+    .row.five-cols > [class*="col-"] {
+        flex: 0 0 auto;
+        width: 20%;
+    }
+}

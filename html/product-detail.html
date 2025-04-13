@@ -10,42 +10,111 @@
     <link rel="stylesheet" href="../css/filter.css">
     <title>Products</title>
     <style>
-        .img {
-            width: 40%;
-        }
-
-        .img img {
+        .product-img {
             width: 100%;
+            max-width: 50%;
             height: auto;
-        }
-
-        .info {
-            width: 60%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
-
 </head>
 
 <body class="master-container-neon-red">
     <div id="header2-placeholder"></div>
     <main>
-        <div class="p-5 m-4">
-            <div class="row g-3">
-                <div class="col-8 g-3" id="product-detail-container"></div>
-                <div class="card col-4 p-3 w-25">
-                    <h6 class="fw-bold mb-2">Sale policy</h6>
-                    <ul class="list-unstyled mb-0">
-                        <li>🚚 Free shipping over 5 million</li>
-                        <li>✅ 100% genuine product</li>
-                        <li>🔄 Return within 10 days</li>
-                        <li>🛡️ Warranty service available</li>
-                    </ul>
+        <div class="d-flex flex-wrap p-5">
+            <div class="card-body mt-5 rounded-3">
+                <div class="row">
+                    <div class="col-8" id="product-detail-container"></div>
+
+                    <div class="col-4">
+                        <div class="card p-3 h-100 d-flex align-items-center">
+
+                            <h6 class="fw-bold mb-2">Sale policy</h6>
+                            <ul class="list-unstyled mb-0">
+                                <li>🚚 Free shipping over 5 million</li>
+                                <li>✅ 100% genuine product</li>
+                                <li>🔄 Return within 10 days</li>
+                                <li>🛡️ Warranty service available</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
+            <div class="card-body p-4 bg-light mt-5 rounded-3">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="mb-4">Product Description</h5>
+                        <div>
+                            <h5 class="card-title product-title"></h5>
+                            <p class="card-text">
+                                Looking for the ultimate gaming rig? Check out the powerful
+                                <a href="#" id="description"></a>
+                                gaming laptop with Intel Core i9-14900HX and NVIDIA GeForce RTX 4090. This laptop
+                                delivers
+                                the ultimate gaming experience with a
+                                sharp, smooth 16-inch WQXGA 240Hz display, along with 32GB DDR5 RAM and a
+                                fast 1TB NVMe PCIe SSD. The sleek, premium design and efficient cooling system
+                                complete the perfect machine for every gamer.
+                            </p>
+                            <img src="" alt="laptop" class="product-img rounded mt-3 mb-4">
+                            <p class="text-muted mt-3">Powerful gaming laptop for gamers</p>
+                        </div>
+                    </div>
 
-
+                    <div class="col-4 ps-4">
+                        <h5 class="mb-4">Details</h5>
+                        <div class="specs-table">
+                            <div class="row">
+                                <div class="col-5">Brand</div>
+                                <div class="col-7" id="brand"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">Guarantee</div>
+                                <div class="col-7" id="guarantee">24 months</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">Detailed configuration</div>
+                                <div class="col-7" id="config">N/A</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">CPU</div>
+                                <div class="col-7" id="cpu"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">Graphics chip</div>
+                                <div class="col-7" id="gpu"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">Screen</div>
+                                <div class="col-7" id="screen"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">Webcam</div>
+                                <div class="col-7">FHD webcam</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">Ram</div>
+                                <div class="col-7" id="ram"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">Storage</div>
+                                <div class="col-7" id="storage"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">Connection port</div>
+                                <div class="col-7">2 x USB Type C / DisplayPort / Power Delivery</div>
+                            </div>
+                        </div>
+                        <div class="text-end mt-4">
+                            <a href="#" class="see-more">See more content <i class="bi bi-chevron-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     </main>
     <div id="footer-placeholder"></div>

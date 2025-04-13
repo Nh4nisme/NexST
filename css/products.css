@@ -28,13 +28,11 @@ main {
     background-color: #2E2E2E;
 }
 
-/* Mặc định ẩn menu ngang */
 .horizontal-menu {
     overflow-x: auto;
-    /* Cho phép cuộn ngang */
     white-space: nowrap;
-    /* Ngăn menu xuống dòng */
     background-color: #2E2E2E;
+    display: none;
 }
 
 /* Ẩn thanh cuộn trên Chrome, Edge, Safari */
