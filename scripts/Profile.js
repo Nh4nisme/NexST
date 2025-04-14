@@ -83,8 +83,21 @@ $(document).ready(function () {
     // Thêm xử lý sự kiện đăng xuất khi nhấn vào nút Logout trong sidebar
     $('#logout').on('click', function () {
         if (confirm('Bạn muốn đăng xuất?')) {
+            // Xóa thông tin người dùng
             localStorage.removeItem('current_user');
-            window.location.href = '../html/homepage.html'; // Chuyển về trang chủ sau khi đăng xuất
+
+            // Xóa giỏ hàng khi đăng xuất
+            localStorage.removeItem('cart');
+
+            // Xóa giỏ hàng tạm thời nếu có (từ tính năng Buy Now)
+            localStorage.removeItem('buyNowCart');
+            localStorage.removeItem('isBuyNow');
+
+            // Thông báo đăng xuất thành công
+            alert('Đăng xuất thành công!');
+
+            // Chuyển về trang chủ sau khi đăng xuất
+            window.location.href = '../html/homepage.html';
         }
     });
 
