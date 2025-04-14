@@ -155,7 +155,7 @@ function renderProducts(products, $container) {
             window.location.href = `product-detail.html`;
         }
     });
-    
+
 }
 
 // --- Tìm kiếm sản phẩm theo keyword ---
@@ -181,8 +181,11 @@ function loadProducts(keyword = "") {
             (product.title && product.title.toLowerCase().includes(keywordLower)) ||
             (product.cpu && product.cpu.toLowerCase().includes(keywordLower)) ||
             (product.gpu && product.gpu.toLowerCase().includes(keywordLower)) ||
-            (product.ram && product.ram.toLowerCase().includes(keywordLower));
-
+            (product.ram && product.ram.toLowerCase().includes(keywordLower)) ||
+            (product.ssd && product.ssd.toLowerCase().includes(keywordLower)) ||
+            (product.screen && product.screen.toLowerCase().includes(keywordLower)) ||
+            (product.category && product.category.toLowerCase().includes(keywordLower)) ||
+            (product.categoryDetail && product.categoryDetail.toLowerCase().includes(keywordLower));
         const productPrice = parseFloat(product.price.replace('$', '').replace(',', '').trim());
         const min = parseFloat(minPrice);
         const max = parseFloat(maxPrice);
@@ -254,7 +257,7 @@ function loadByCategoryAndFilter(category, filters = {}) {
         );
     }
 
-    renderProducts(filtered, $productFind); 
+    renderProducts(filtered, $productFind);
 }
 
 

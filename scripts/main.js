@@ -154,22 +154,14 @@ $(document).ready(async function () {
         checkUserLoginStatus();
     });
     await loadHTML("header2-placeholder", "../html/header2.html", function () {
-        const $searchBox = $("#header2-placeholder #searchBox");
-
-        if (!$searchBox.data("events-bound")) {
-            $searchBox.on("keydown", function (event) {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    loadProducts($searchBox.val());
+        $("#searchBox").on("keypress", function (e) {
+            if (e.which === 13) {
+                const keyword = $(this).val().trim();
+                if (keyword !== "") {
+                    window.location.href = `/html/productpage.html?search=${encodeURIComponent(keyword)}`;
                 }
-            });
-
-            $searchBox.on("input", function () {
-                loadProducts($searchBox.val());
-            });
-
-            $searchBox.data("events-bound", true);
-        }
+            }
+        });
     });
     await loadHTML("footer-placeholder", "../html/footer.html");
     await loadHTML("filter-content", "../html/filter.html");
@@ -184,7 +176,6 @@ $(document).ready(async function () {
     });
 
     rebindAddToCartEvent();
-
 });
 
 // --- Hàm gán sự kiện Add To Cart ---

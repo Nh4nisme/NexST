@@ -311,6 +311,17 @@
     <div id="footer-placeholder"></div>
     <script src="../scripts/Profile.js"></script>
     <script src="../scripts/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Thêm nút toggle vào sidebar-header
+            $('.sidebar-header').append('<button class="sidebar-toggle">☰</button>');
+
+            // Xử lý sự kiện click để hiện/ẩn sidebar-menu
+            $('.sidebar-toggle').on('click', function () {
+                $('.sidebar-menu').toggleClass('active');
+            });
+        });
+    </script>
 </body>
 
 </html>
